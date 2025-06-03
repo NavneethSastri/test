@@ -1,32 +1,21 @@
-using System.Diagnostics;
+g System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using ScooterRent.Models;
 
+
 namespace ScooterRent.Controllers
 {
-    public class HomeController : Controller
+    public class ScooterController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
+        private static List<Scooter> Scooters = new List<Scooter>
         {
-            _logger = logger;
-        }
+            new Scooter { Id = 1, Model = "Scooter A", PricePerHour = 5, IsAvailable = true },
+            new Scooter { Id = 2, Model = "Scooter B", PricePerHour = 6, IsAvailable = true }
+        };
 
         public IActionResult Index()
         {
-            return View();
-        }
-
-        public IActionResult Privacy()
-        {
-            return View();
-        }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            return View(Scooters.Where(s => s.IsAvailable));
         }
     }
 }
